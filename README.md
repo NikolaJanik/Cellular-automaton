@@ -1,4 +1,4 @@
-# Game of life
+# Conway's Game of life
 
 General rules:
 1. Any live cell with fewer than two live neighbours dies, as if by underpopulation.
