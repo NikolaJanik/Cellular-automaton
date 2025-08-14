@@ -4,7 +4,7 @@ import pygame
 
 COLOR_BG = (10,10,10)
 COLOR_GRID = (40,40,40)
-COLOR_DIE_NEXT = (170,170,170)
+COLOR_DIE_NEXT = (0,0,0)
 COLOR_ALIVE_NEXT = (255,255,255)
 
 def update(screen, cells, size, with_pregress=False):
@@ -68,7 +68,7 @@ def main():
             pygame.display.update()
             
             
-        time.sleep(0.001)
+        time.sleep(0.2)
     
 if __name__ == '__main__':
     main()
