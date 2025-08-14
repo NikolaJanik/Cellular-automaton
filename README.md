@@ -7,12 +7,12 @@ General rules:
 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproductio
 
 Requirements:
-python
-numpy
-pygame
+ - python
+ - numpy
+ - pygame
 
 To start the game type:
-python gameOfLife.py
+  python gameOfLife.py
 
 When the application's window appears, you can choose starting conditions
 using left click of your mouse to activate cells (remeber about basic rules).
