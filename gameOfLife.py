@@ -35,14 +35,25 @@ def update(screen, cells, size, with_pregress=False):
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((800, 600))
+    screen = pygame.display.set_mode((800, 620))
     cells = np.zeros((60, 80))
     screen.fill(COLOR_GRID)
+    generation = 0
     update(screen, cells, 10)
     
+    text_font = pygame.font.SysFont("Arial", 20)
+    
+    def draw_text(text, font, text_col, x, y):
+        img = font.render(text, True, text_col)
+        screen.blit(img, (x, y))
+    
     pygame.display.flip()
+    pygame.draw.rect(screen, (255,255,255), (0, 600, 800, 20))
+    draw_text(f"Generation: {generation}", text_font, (0,0,0), 0, 600)
     pygame.display.update()
     
+    
+
     running = False
     
     while True:
@@ -54,44 +65,30 @@ def main():
                 if event.key == pygame.K_SPACE:
                     running = not running
                     update(screen, cells, 10)
+                    pygame.draw.rect(screen, (255,255,255), (0, 600, 800, 20))
+                    draw_text(f"Generation: {generation}", text_font, (0,0,0), 0, 600)
                     pygame.display.update()
             if pygame.mouse.get_pressed()[0]:
                 pos = pygame.mouse.get_pos()
                 cells[pos[1] // 10, pos[0] //10] = 1
                 update(screen, cells, 10)
+                pygame.draw.rect(screen, (255,255,255), (0, 600, 800, 20))
+                draw_text(f"Generation: {generation}", text_font, (0,0,0), 0, 600)
                 pygame.display.update()
                 
         screen.fill(COLOR_GRID)
         
         if running:
+            generation +=1
             cells = update(screen, cells, 10, with_pregress=True)
+            pygame.draw.rect(screen, (255,255,255), (0, 600, 800, 20))
+            draw_text(f"Generation: {generation}", text_font, (0,0,0), 0, 600)
             pygame.display.update()
+            
+            print(f"Generation {generation}")
             
             
         time.sleep(0.2)
     
 if __name__ == '__main__':
     main()
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
