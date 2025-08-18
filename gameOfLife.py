@@ -19,7 +19,7 @@ class Menu:
         imgLoafer = pygame.image.load("loafer.png").convert_alpha()
         imgPenta = pygame.image.load("pentadecathlon.png").convert_alpha()
 
-        self.buttonClearGrid = button.Button(0, 0, imgClearGrid, 2)
+        self.buttonClearGrid = button.Button(0, 0, imgClearGrid, 1)
         self.buttonBomber = button.Button(0, 50, imgBomber, 1)
         self.buttonCopperhead = button.Button(0, 0, imgCopperhead, 1)
         self.buttonDart = button.Button(0, 50, imgDart, 1)
@@ -83,20 +83,12 @@ def main():
     cells = np.zeros((60, 80))
     screen.fill(COLOR_GRID)
     generation = 0
-    update(screen, cells, 10)
-    
+    menu = Menu((800, 620), screen)
     text_font = pygame.font.SysFont("Arial", 20)
     
     def draw_text(text, font, text_col, x, y):
         img = font.render(text, True, text_col)
         screen.blit(img, (x, y))
-    
-    pygame.display.flip()
-    pygame.draw.rect(screen, (255,255,255), (0, 600, 800, 20))
-    draw_text(f"Generation: {generation}", text_font, (0,0,0), 0, 600)
-    pygame.display.update()
-    
-    
 
     running = False
     
@@ -105,34 +97,35 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    running = not running
-                    update(screen, cells, 10)
-                    pygame.draw.rect(screen, (255,255,255), (0, 600, 800, 20))
-                    draw_text(f"Generation: {generation}", text_font, (0,0,0), 0, 600)
-                    pygame.display.update()
-            if pygame.mouse.get_pressed()[0]:
-                pos = pygame.mouse.get_pos()
-                cells[pos[1] // 10, pos[0] //10] = 1
+
+            if menu.menu_mode:
+                menu.events()
+
+            else:
+                screen.fill(COLOR_GRID)
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        running = not running
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        pos = pygame.mouse.get_pos()
+                        cells[pos[1] // 10, pos[0] // 10] = 1
+
+        if not menu.menu_mode:
+            if running:
+                generation += 1
+                cells = update(screen, cells, 10, with_pregress=True)
+                print(f"Generation {generation}")
+            else:
                 update(screen, cells, 10)
-                pygame.draw.rect(screen, (255,255,255), (0, 600, 800, 20))
-                draw_text(f"Generation: {generation}", text_font, (0,0,0), 0, 600)
-                pygame.display.update()
-                
-        screen.fill(COLOR_GRID)
-        
-        if running:
-            generation +=1
-            cells = update(screen, cells, 10, with_pregress=True)
-            pygame.draw.rect(screen, (255,255,255), (0, 600, 800, 20))
-            draw_text(f"Generation: {generation}", text_font, (0,0,0), 0, 600)
-            pygame.display.update()
-            
-            print(f"Generation {generation}")
-            
-            
-        time.sleep(0.2)
+
+            pygame.draw.rect(screen, (255, 255, 255), (0, 600, 800, 20))
+            draw_text(f"Generation: {generation}",
+                      text_font, (0, 0, 0), 0, 600)
+
+        pygame.display.update()
+        time.sleep(0.1)
     
 if __name__ == '__main__':
     main()
