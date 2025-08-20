@@ -34,7 +34,7 @@ class Menu:
                 pygame.quit()
                 quit()
 
-        f self.buttonClearGrid.draw(self.surface):
+        if self.buttonClearGrid.draw(self.surface):
             self.menu_mode = False
             self.surface.fill(self.color)
         elif self.buttonBomber.draw(self.surface):
