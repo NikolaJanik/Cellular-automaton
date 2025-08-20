@@ -9,25 +9,22 @@ class Menu:
         self.color = (0, 0, 0)
         self.menu_mode = True
 
-        imgClearGrid = pygame.image.load("clearGrid.png").convert_alpha()
-        imgBomber = pygame.image.load("bomber.png").convert_alpha()
-        imgCopperhead = pygame.image.load("copperhead.png").convert_alpha()
-        imgDart = pygame.image.load("dart.png").convert_alpha()
-        imgDiamond = pygame.image.load("diamond.png").convert_alpha()
-        imgGGG = pygame.image.load("gosperGlinderGun.png").convert_alpha()
-        imgKickback = pygame.image.load("kickback.png").convert_alpha()
-        imgLoafer = pygame.image.load("loafer.png").convert_alpha()
-        imgPenta = pygame.image.load("pentadecathlon.png").convert_alpha()
+        imgClearGrid = pygame.image.load("images/clearGrid.png").convert_alpha()
+        imgBomber = pygame.image.load("images/bomber.png").convert_alpha()
+        imgCopperhead = pygame.image.load("images/copperhead.png").convert_alpha()
+        imgDart = pygame.image.load("images/dart.png").convert_alpha()
+        imgDiamond = pygame.image.load("images/diamond.png").convert_alpha()
+        imgGun = pygame.image.load("images/gun.png").convert_alpha()
+        imgLoafer = pygame.image.load("images/loafer.png").convert_alpha()
+        imgPenta = pygame.image.load("images/pentadecathlon.png").convert_alpha()
 
-        self.buttonClearGrid = button.Button(0, 0, imgClearGrid, 1)
-        self.buttonBomber = button.Button(0, 50, imgBomber, 1)
-        self.buttonCopperhead = button.Button(0, 0, imgCopperhead, 1)
-        self.buttonDart = button.Button(0, 50, imgDart, 1)
-        self.buttonDiamond = button.Button(0, 0, imgDiamond, 1)
-        self.buttonGGG = button.Button(0, 50, imgGGG, 1)
-        self.buttonKickback = button.Button(0, 0, imgKickback, 1)
-        self.buttonLoafer = button.Button(0, 50, imgLoafer, 1)
-        self.buttonPenta = button.Button(0, 0, imgPenta, 1)
+        self.buttonBomber = button.Button(360, 0, imgBomber, 1)
+        self.buttonCopperhead = button.Button(0, 150, imgCopperhead, 1)
+        self.buttonDart = button.Button(360, 150, imgDart, 1)
+        self.buttonDiamond = button.Button(360, 300, imgDiamond, 1)
+        self.buttonGun = button.Button(0, 300, imgGun, 1)
+        self.buttonLoafer = button.Button(360, 450, imgLoafer, 1)
+        self.buttonPenta = button.Button(0, 450, imgPenta, 1)
 
     def events(self):
         self.surface.fill(self.color)
@@ -37,10 +34,28 @@ class Menu:
                 pygame.quit()
                 quit()
 
-        if self.buttonClearGrid.draw(self.surface):
+        f self.buttonClearGrid.draw(self.surface):
             self.menu_mode = False
             self.surface.fill(self.color)
         elif self.buttonBomber.draw(self.surface):
+            self.menu_mode = False
+            self.surface.fill(self.color)
+        elif self.buttonCopperhead.draw(self.surface):
+            self.menu_mode = False
+            self.surface.fill(self.color)
+        elif self.buttonDart.draw(self.surface):
+            self.menu_mode = False
+            self.surface.fill(self.color)
+        elif self.buttonDiamond.draw(self.surface):
+            self.menu_mode = False
+            self.surface.fill(self.color)
+        elif self.buttonGun.draw(self.surface):
+            self.menu_mode = False
+            self.surface.fill(self.color)
+        elif self.buttonLoafer.draw(self.surface):
+            self.menu_mode = False
+            self.surface.fill(self.color)
+        elif self.buttonPenta.draw(self.surface):
             self.menu_mode = False
             self.surface.fill(self.color)
         pygame.display.update()
