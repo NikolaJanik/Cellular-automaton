@@ -18,4 +18,4 @@ When the application's window appears, you can choose starting conditions
 using left click of your mouse to activate cells (remeber about basic rules).
 Start the game with 'space' on the keyboard. You can also stop the game with
 'space' and activate chosen cells. You are able to activate cells when
-the game is running
+the game is running.
