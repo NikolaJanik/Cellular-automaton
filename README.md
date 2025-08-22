@@ -12,7 +12,7 @@ Requirements:
  - pygame
 
 To start the game type:
-  ** python gameOfLife.py **
+   python gameOfLife.py
 
 When the application's window appears, you can choose starting conditions
 using left click of your mouse to activate cells (remeber about basic rules).
