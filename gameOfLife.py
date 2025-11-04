@@ -8,6 +8,7 @@ class Menu:
         self.surface = surface
         self.color = (0, 0, 0)
         self.menu_mode = True
+        self.patternName = None
 
         imgClearGrid = pygame.image.load("images/clearGrid.png").convert_alpha()
         imgBomber = pygame.image.load("images/bomber.png").convert_alpha()
@@ -28,7 +29,7 @@ class Menu:
 
     def events(self):
         self.surface.fill(self.color)
-        
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -38,24 +39,31 @@ class Menu:
             self.menu_mode = False
             self.surface.fill(self.color)
         elif self.buttonBomber.draw(self.surface):
+            self.patternName = 'bomber'
             self.menu_mode = False
             self.surface.fill(self.color)
         elif self.buttonCopperhead.draw(self.surface):
+            self.patternName = 'copperhead'
             self.menu_mode = False
             self.surface.fill(self.color)
         elif self.buttonDart.draw(self.surface):
+            self.patternName = '???'
             self.menu_mode = False
             self.surface.fill(self.color)
         elif self.buttonDiamond.draw(self.surface):
+            self.patternName = 'diamond'
             self.menu_mode = False
             self.surface.fill(self.color)
         elif self.buttonGun.draw(self.surface):
+            self.patternName = 'gun'
             self.menu_mode = False
             self.surface.fill(self.color)
         elif self.buttonLoafer.draw(self.surface):
+            self.patternName = '???'
             self.menu_mode = False
             self.surface.fill(self.color)
         elif self.buttonPenta.draw(self.surface):
+            self.patternName = 'pentadecathlon'
             self.menu_mode = False
             self.surface.fill(self.color)
         pygame.display.update()
@@ -135,7 +143,7 @@ def main():
             else:
                 update(screen, cells, 10)
                 #Drawing map only first time. After stops it won't appear
-                if(not generation):
+                if ((not generation) and menu.patternName):
                     pygame.draw.rect(screen, (255, 255, 255), (60,80,9,9))
 
             pygame.draw.rect(screen, (255, 255, 255), (0, 600, 800, 20))
