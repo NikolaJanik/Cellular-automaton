@@ -134,6 +134,9 @@ def main():
                 print(f"Generation {generation}")
             else:
                 update(screen, cells, 10)
+                #Drawing map only first time. After stops it won't appear
+                if(not generation):
+                    pygame.draw.rect(screen, (255, 255, 255), (60,80,9,9))
 
             pygame.draw.rect(screen, (255, 255, 255), (0, 600, 800, 20))
             draw_text(f"Generation: {generation}",
