@@ -13,20 +13,21 @@ class Menu:
         imgClearGrid = pygame.image.load("images/clearGrid.png").convert_alpha()
         imgBomber = pygame.image.load("images/bomber.png").convert_alpha()
         imgCopperhead = pygame.image.load("images/copperhead.png").convert_alpha()
-        imgDart = pygame.image.load("images/dart.png").convert_alpha()
+        imgFuse = pygame.image.load("images/blinkerFuse.png").convert_alpha()
         imgDiamond = pygame.image.load("images/diamond.png").convert_alpha()
         imgGun = pygame.image.load("images/gun.png").convert_alpha()
-        imgLoafer = pygame.image.load("images/loafer.png").convert_alpha()
+        imgShip = pygame.image.load("images/blinkerShip.png").convert_alpha()
         imgPenta = pygame.image.load("images/pentadecathlon.png").convert_alpha()
-
+        
+        self.buttonClearGrid = button.Button(0, 0, imgClearGrid, 1)
         self.buttonBomber = button.Button(360, 0, imgBomber, 1)
         self.buttonCopperhead = button.Button(0, 150, imgCopperhead, 1)
-        self.buttonDart = button.Button(360, 150, imgDart, 1)
+        self.buttonFuse = button.Button(360, 150, imgFuse, 1)
         self.buttonDiamond = button.Button(360, 300, imgDiamond, 1)
         self.buttonGun = button.Button(0, 300, imgGun, 1)
-        self.buttonLoafer = button.Button(360, 450, imgLoafer, 1)
+        self.buttonShip = button.Button(360, 450, imgShip, 1)
         self.buttonPenta = button.Button(0, 450, imgPenta, 1)
-
+        
     def events(self):
         self.surface.fill(self.color)
 
@@ -46,8 +47,8 @@ class Menu:
             self.patternName = 'copperhead'
             self.menu_mode = False
             self.surface.fill(self.color)
-        elif self.buttonDart.draw(self.surface):
-            self.patternName = '???'
+        elif self.buttonFuse.draw(self.surface):
+            self.patternName = 'blinkerFuse'
             self.menu_mode = False
             self.surface.fill(self.color)
         elif self.buttonDiamond.draw(self.surface):
@@ -55,11 +56,11 @@ class Menu:
             self.menu_mode = False
             self.surface.fill(self.color)
         elif self.buttonGun.draw(self.surface):
-            self.patternName = 'gun'
+            self.patternName = 'gosperGlinderGun'
             self.menu_mode = False
             self.surface.fill(self.color)
-        elif self.buttonLoafer.draw(self.surface):
-            self.patternName = '???'
+        elif self.buttonShip.draw(self.surface):
+            self.patternName = 'blinkerShip'
             self.menu_mode = False
             self.surface.fill(self.color)
         elif self.buttonPenta.draw(self.surface):
