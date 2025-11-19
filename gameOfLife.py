@@ -2,6 +2,8 @@ import numpy as np
 import time
 import pygame
 import button
+import csv
+
 
 class Menu:
     def __init__(self, win_size, surface):
@@ -18,7 +20,7 @@ class Menu:
         imgGun = pygame.image.load("images/gun.png").convert_alpha()
         imgShip = pygame.image.load("images/blinkerShip.png").convert_alpha()
         imgPenta = pygame.image.load("images/pentadecathlon.png").convert_alpha()
-        
+
         self.buttonClearGrid = button.Button(0, 0, imgClearGrid, 1)
         self.buttonBomber = button.Button(360, 0, imgBomber, 1)
         self.buttonCopperhead = button.Button(0, 150, imgCopperhead, 1)
@@ -27,7 +29,7 @@ class Menu:
         self.buttonGun = button.Button(0, 300, imgGun, 1)
         self.buttonShip = button.Button(360, 450, imgShip, 1)
         self.buttonPenta = button.Button(0, 450, imgPenta, 1)
-        
+
     def events(self):
         self.surface.fill(self.color)
 
@@ -70,20 +72,32 @@ class Menu:
         pygame.display.update()
 
 
-COLOR_BG = (10,10,10)
-COLOR_GRID = (40,40,40)
-COLOR_DIE_NEXT = (0,0,0)
-COLOR_ALIVE_NEXT = (255,255,255)
+COLOR_BG = (10, 10, 10)
+COLOR_GRID = (40, 40, 40)
+COLOR_DIE_NEXT = (0, 0, 0)
+COLOR_ALIVE_NEXT = (255, 255, 255)
+
+
+def loadMap(patternName):
+    cells = np.zeros((60,80))
+    file_path = f"./maps/{patternName}.csv"
+    with open(file_path) as handle:
+        file = csv.reader(handle)
+        for row_idx, row in enumerate(file):
+            for elem_idx, elem in enumerate(row):
+                cells[row_idx][elem_idx] = elem
+    return cells
+
 
 def update(screen, cells, size, with_pregress=False):
     updated_cells = np.zeros((cells.shape[0], cells.shape[1]))
-    
+
     for row, col in np.ndindex(cells.shape):
-        alive = np.sum(cells[row-1:row+2, col-1:col+2]) - cells[row,col]
+        alive = np.sum(cells[row-1:row+2, col-1:col+2]) - cells[row, col]
         color = COLOR_BG if cells[row, col] == 0 else COLOR_ALIVE_NEXT
-        
-        if cells[row,col] == 1:
-            if alive < 2 or alive >3:
+
+        if cells[row, col] == 1:
+            if alive < 2 or alive > 3:
                 if with_pregress:
                     color = COLOR_DIE_NEXT
             elif 2 <= alive <= 3:
@@ -95,27 +109,29 @@ def update(screen, cells, size, with_pregress=False):
                 updated_cells[row, col] = 1
                 if with_pregress:
                     color = COLOR_ALIVE_NEXT
-                
-                
+
         pygame.draw.rect(screen, color, (col*size, row*size, size-1, size-1))
-        
+
     return updated_cells
+
 
 def main():
     pygame.init()
     screen = pygame.display.set_mode((800, 620))
+    pygame.display.set_caption("Game of life")
     cells = np.zeros((60, 80))
+    cell_size = 10
     screen.fill(COLOR_GRID)
     generation = 0
     menu = Menu((800, 620), screen)
     text_font = pygame.font.SysFont("Arial", 20)
-    
+
     def draw_text(text, font, text_col, x, y):
         img = font.render(text, True, text_col)
         screen.blit(img, (x, y))
 
     running = False
-    
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -137,22 +153,29 @@ def main():
                         cells[pos[1] // 10, pos[0] // 10] = 1
 
         if not menu.menu_mode:
+
             if running:
                 generation += 1
-                cells = update(screen, cells, 10, with_pregress=True)
-                print(f"Generation {generation}")
-            else:
-                update(screen, cells, 10)
-                #Drawing map only first time. After stops it won't appear
-                if ((not generation) and menu.patternName):
-                    pygame.draw.rect(screen, (255, 255, 255), (60,80,9,9))
+                cells = update(screen, cells, cell_size, with_pregress=True)
 
+            else:
+                update(screen, cells, cell_size)
+                # Drawing map only first time. After stops it won't appear
+                if ((not generation) and menu.patternName):
+                    cells = loadMap(menu.patternName)
+                    for row_idx, row in enumerate(cells):
+                        for cell_idx, cell in enumerate(row):
+                            if(cell == 1):
+                                pygame.draw.rect(screen, (255, 255, 255), (cell_idx*cell_size, row_idx*cell_size, cell_size-1, cell_size-1))
+
+            # Drawing a space with text (generations)
             pygame.draw.rect(screen, (255, 255, 255), (0, 600, 800, 20))
             draw_text(f"Generation: {generation}",
                       text_font, (0, 0, 0), 0, 600)
 
         pygame.display.update()
         time.sleep(0.1)
-    
+
+
 if __name__ == '__main__':
     main()
